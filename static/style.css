@@ -1,0 +1,234 @@
+body {
+    background-color: #f4f7f6;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('background.jpeg');
+    background-size: cover
+}
+
+/* Hover box styles */
+.hover-box {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%; /* Adjust as needed to place the box closer */
+    background: #f0f0f0; /* Greyish background */
+    border: 1px solid #ccc;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.image-container:hover .hover-box,
+.hover-box:hover {
+    display: block;
+    transform: translate(-5px);
+}
+
+.hover-box form {
+    margin: 0;
+}
+
+.hover-box button {
+    display: block;
+    width: 100%; /* Ensure buttons fill the box width */
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+.hover-box button:hover {
+    background: #e0e0e0; /* Lighter grey for hover effect */
+}
+
+/* Resize box styles */
+.resize-box {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%; /* Adjust as needed to place the box to the right */
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 175px;
+}
+
+.resize-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.resize-box input[type="number"] {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.resize-box button {
+    width: 100%;
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.resize-button.active {
+    background: #e0e0e0; /* Darker grey for active state */
+}
+
+.navbar-custom {
+    background-color: rgba(136, 186, 226, 0.8);
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: #fff;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #ffc107;
+}
+
+.navbar-custom .nav-item.active .nav-link {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.card-custom {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.card-custom:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.footer-custom {
+    background-color: rgba(53, 81, 89, 0.8);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    margin-top: 20px;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.gallery img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+.modal-content {
+    margin-top: 500px; /* Adjust if needed */
+    border-radius: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.login-animation.nav-link {
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.login-anim {
+    color: #548ecb; /* Blue color */
+    font-weight: bold; /* Bolder */
+    font-size: 3rem; /* Bigger */
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+input::placeholder {
+    text-align: center;
+}
+
+input {
+    text-align: center;
+}
+
+.placeholder-image {
+    height: 128px; /* Adjust the height to match your image size */
+    background-color: #e9ecef;
+    color: #6c757d;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .25rem .25rem 0 0; /* To match card-img-top border radius */
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+.image-container img {
+    width: 200px; /* Adjust as needed */
+    height: auto;
+    transition: opacity 0.3s;
+}
+
+.image-container:hover img {
+    opacity: 0.7;
+}
+
+.image-container:hover .delete-form {
+    display: block;
+}

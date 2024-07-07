@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Folder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <script>
+        function toggleResizeBox(button) {
+            var resizeBox = button.nextElementSibling;
+            var buttons = document.querySelectorAll('.resize-button');
+            buttons.forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                    btn.nextElementSibling.style.display = 'none';
+                }
+            });
+            if (resizeBox.style.display === 'block') {
+                resizeBox.style.display = 'none';
+                button.classList.remove('active');
+            } else {
+                resizeBox.style.display = 'block';
+                button.classList.add('active');
+            }
+        }
+
+        function confirmDeleteFolder(foldername) {
+            if (confirm("Are you sure you want to delete this folder and all its contents?")) {
+                window.location.href = `/delete_folder/${foldername}`;
+            }
+        }
+
+        function showModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        function previewFile() {
+            const preview = document.getElementById('previewImg');
+            const file = document.getElementById('fileInput').files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result;
+                showModal();
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitForm() {
+            const form = document.getElementById('uploadForm');
+            form.submit();
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <a class="navbar-brand animate__animated animate__fadeInLeft" href="#">My Web Application</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item animate__animated animate__fadeInDown">
+                        <a class="nav-link" href="{{ url_for('about') }}"><i class="fas fa-info-circle"></i> About Me</a>
+                    </li>
+                    <li class="nav-item animate__animated animate__fadeInDown animate__delay-1s">
+                        <a class="nav-link" href="#"><i class="fas fa-ellipsis-h"></i> More</a>
+                    </li>
+                    <li class="nav-item animate__animated animate__fadeInDown animate__delay-2s">
+                        <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="login-anim">Images in {{ foldername }}</h1>
+            <button class="btn btn-danger" onclick="confirmDeleteFolder('{{ foldername }}')">Delete Folder</button>
+        </div>
+        
+        <form id="uploadForm" action="{{ url_for('upload_file', foldername=foldername) }}" method="post" enctype="multipart/form-data" class="form-inline mb-4 login-animation">
+            <div class="form-group mr-2">
+                <input type="file" class="form-control-file" id="fileInput" name="file" onchange="previewFile()">
+            </div>
+            <input type="hidden" id="photoName" name="photoName">
+        </form>
+        
+        <div id="myModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Image Preview</h5>
+                        <button type="button" class="close" onclick="closeModal()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="previewImg" src="" alt="Image Preview" class="img-fluid">
+                        <input type="text" id="photoNameInput" class="form-control mt-2" placeholder="Enter photo name" oninput="document.getElementById('photoName').value = this.value">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="submitForm()">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for file in files %}
+                <div class="col-md-3">
+                    <div class="card mb-4 image-container card-custom">
+                        <a href="{{ url_for('uploaded_file', foldername=foldername, filename=file.replace('_thumb', '')) }}" target="_blank">
+                            <img src="{{ url_for('uploaded_file', foldername=foldername, filename=file.replace('_thumb', '')) }}" class="card-img-top" alt="Full Image">
+                        </a>
+                        <div class="card-body text-center">
+                            <p class="card-text">{{ file.split('.')[0] }}</p>
+                        </div>
+                        <div class="hover-box">
+                            <form action="{{ url_for('delete_image', foldername=foldername, filename=file.replace('_thumb', '')) }}" method="post" class="delete-form mb-2">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            <form action="{{ url_for('apply_filter', foldername=foldername, filename=file.replace('_thumb', '')) }}" method="post" class="mb-2">
+                                <button type="submit" class="btn btn-outline-light btn-sm" name="filter" value="grayscale">Grayscale</button>
+                                <button type="submit" class="btn btn-outline-light btn-sm" name="filter" value="blur">Blur</button>
+                                <button type="submit" class="btn btn-outline-light btn-sm" name="filter" value="rotate">Rotate</button>
+                                <button type="submit" class="btn btn-outline-light btn-sm" name="filter" value="revert">Revert</button>
+                            </form>
+                            <button class="btn btn-outline-light btn-sm resize-button" onclick="toggleResizeBox(this)">Resize ></button>
+                            <div class="resize-box">
+                                <form action="{{ url_for('resize_image', foldername=foldername, filename=file.replace('_thumb', '')) }}" method="post">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control mb-2" name="width" placeholder="Width (px)" required>
+                                        <input type="number" class="form-control mb-2" name="height" placeholder="Height (px)" required>
+                                        <button type="submit" class="btn btn-outline-light btn-sm">Apply</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="/" class="btn btn-secondary mt-4">Back to Folders</a>
+    </div>
+
+    <div class="footer-custom mt-5">
+        <button class="btn btn-light" onclick="showContactForm()">Contact Us</button>
+    </div>
+
+    <div id="contactModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Contact Us</h5>
+                    <button type="button" class="close" onclick="closeContactForm()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/send_message" method="post" class="contact-form">
+                        <div class="form-group">
+                            <label for="contactEmail">Email:</label>
+                            <input type="email" class="form-control" id="contactEmail" name="contactEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPhone">Phone:</label>
+                            <input type="tel" class="form-control" id="contactPhone" name="contactPhone">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message:</label>
+                            <textarea class="form-control" id="contactMessage" name="contactMessage" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function showContactForm() {
+            var modal = document.getElementById("contactModal");
+            modal.style.display = "block";
+        }
+
+        function closeContactForm() {
+            var modal = document.getElementById("contactModal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>

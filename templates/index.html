@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Image Folders
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="login-anim">Image Folders</h1>
+    <form action="/create-folder" method="post" class="form-inline mb-4">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="folderName" class="sr-only">Folder Name</label>
+            <input type="text" class="form-control" id="folderName" name="folder_name" placeholder="Folder Name" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Create Folder</button>
+    </form>
+    <div class="row">
+        {% for folder in folders %}
+        <div class="col-md-3">
+            <div class="card mb-4 card-custom">
+                <a href="{{ url_for('folder', foldername=folder.name) }}">
+                    {% if folder.image %}
+                    <img src="{{ url_for('uploaded_file', foldername=folder.name, filename=folder.image) }}" class="card-img-top" alt="{{ folder.name }}">
+                    {% else %}
+                    <div class="placeholder-image d-flex align-items-center justify-content-center">
+                        Tap to add images to the folder
+                    </div>
+                    {% endif %}
+                </a>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ folder.name }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

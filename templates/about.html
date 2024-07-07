@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-color: rgba(136, 186, 226, 0.8);
+        }
+        .navbar-custom {
+            background-color: rgba(136, 186, 226, 0.8);
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff;
+        }
+        .content {
+            background-color: #f5f5dc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">My Web Application</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">More</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="content">
+            <h1>About Me</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec erat erat. Integer bibendum nisi eget risus vestibulum, ac tempor elit feugiat. Nullam ac tortor vitae metus egestas interdum. Mauris id nisi et urna sollicitudin dictum. Aenean vitae purus ut libero convallis cursus a nec elit. Integer nec facilisis orci, vitae lobortis ligula. Etiam sit amet accumsan purus.
+            </p>
+            <p>
+                Phasellus et nulla a leo vulputate fermentum. In sit amet eros sit amet dui posuere hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi euismod, nunc ut lacinia tempor, odio libero dapibus lacus, vel molestie erat libero id purus. Aenean euismod, lectus eu pellentesque gravida, libero sapien fermentum magna, vel feugiat nisi turpis ac ligula.
+            </p>
+            <p>
+                Aliquam erat volutpat. Praesent dignissim nisl in ante consectetur, non volutpat elit varius. Integer commodo tristique nisi id volutpat. Cras non orci eu libero malesuada venenatis. Nulla facilisi. Integer quis tellus eu mauris tincidunt aliquet non in lacus. Nulla fermentum venenatis elit nec convallis.
+            </p>
+            <p>
+                Donec condimentum suscipit erat, ut convallis purus. In auctor, mi in vulputate tincidunt, sem ligula vehicula lacus, ac venenatis orci ligula at arcu. Fusce ut odio non nisi convallis vestibulum at vel orci. Integer fermentum sapien ac magna dictum, ut fringilla ipsum facilisis. Nunc vel ipsum vel sapien venenatis tempor non eget libero.
+            </p>
+            <p>
+                Vestibulum sodales libero quis urna mattis, id blandit quam suscipit. Maecenas nec arcu risus. Mauris vitae lacus consequat, placerat ligula ac, vehicula libero. Fusce pretium lorem vitae erat vestibulum, non sollicitudin purus gravida. Curabitur euismod sapien a dolor consectetur, ut congue lacus dignissim. Nulla facilisi. Duis vitae eros et nulla suscipit fermentum a at lacus.
+            </p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

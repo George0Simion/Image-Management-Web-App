@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Web Application{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-custom">
+                <a class="navbar-brand animate__animated animate__fadeInLeft" href="#">My Web Application</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item animate__animated animate__fadeInDown">
+                            <a class="nav-link" href="{{ url_for('about') }}"><i class="fas fa-info-circle"></i> About Me</a>
+                        </li>
+                        <li class="nav-item animate__animated animate__fadeInDown animate__delay-1s">
+                            <a class="nav-link" href="#"><i class="fas fa-ellipsis-h"></i> More</a>
+                        </li>
+                        <li class="nav-item animate__animated animate__fadeInDown animate__delay-2s">
+                            <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    {% endif %}
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+
+    <div class="footer-custom mt-5">
+        <button class="btn btn-light" onclick="showContactForm()">Contact Us</button>
+    </div>
+
+    <div id="contactModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Contact Us</h5>
+                    <button type="button" class="close" onclick="closeContactForm()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/send_message" method="post" class="contact-form">
+                        <div class="form-group">
+                            <label for="contactEmail">Email:</label>
+                            <input type="email" class="form-control" id="contactEmail" name="contactEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPhone">Phone:</label>
+                            <input type="tel" class="form-control" id="contactPhone" name="contactPhone">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message:</label>
+                            <textarea class="form-control" id="contactMessage" name="contactMessage" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function showContactForm() {
+            var modal = document.getElementById("contactModal");
+            modal.style.display = "block";
+        }
+
+        function closeContactForm() {
+            var modal = document.getElementById("contactModal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>
